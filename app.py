@@ -24,7 +24,20 @@ def seleccionar_archivo():
 
 # Función para mostrar los resultados en pantalla
 def mostrar_resultados():
-    root.state('zoomed')  # Maximizar ventana en modo convencional
+    import platform
+
+    # Detecta si estás en Docker comprobando el entorno o sistema operativo
+    running_in_docker = os.environ.get('DISPLAY', '').startswith('localhost') or platform.system() == "Linux"
+
+    if not running_in_docker:
+        try:
+            root.state('zoomed')  # Maximizar ventana solo fuera de Docker
+        except Exception as e:
+            print(f"Error al aplicar 'zoomed': {e}")
+    else:
+        print("Ejecutando en Docker: 'zoomed' no es compatible.")
+
+    # Continúa con el resto de la función
     notebook.pack(fill="both", expand=True)
 
 # Función que procesa los datos
