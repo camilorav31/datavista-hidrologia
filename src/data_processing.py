@@ -1,5 +1,7 @@
 import pandas as pd
 from scipy import stats
+import os
+import sys
 
 def calcular_estadisticos(datos):
     # Cálculo de estadísticos descriptivos básicos
@@ -28,6 +30,19 @@ def cargar_datos(file_path):
     
     return datos
 
+def resource_path(relative_path):
+    """Obtiene la ruta absoluta del recurso, para PyInstaller y entornos como Docker."""
+    try:
+        # PyInstaller usa _MEIPASS para la ruta de los archivos temporales
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # En Docker, usamos directamente la ruta absoluta de /app
+        if os.path.exists("/app"):
+            base_path = "/app"
+        else:
+            # En modo local o desarrollo, usamos el directorio actual
+            base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def cargar_datos_enso(ruta_csv='assets/enso.csv'):
     """
@@ -39,7 +54,9 @@ def cargar_datos_enso(ruta_csv='assets/enso.csv'):
     Retorna:
     pd.DataFrame: DataFrame con columnas 'Fecha' (YYYY-MM-DD) y 'ONI' en formato largo.
     """
-    
+     # Usa resource_path para garantizar la ruta correcta en cualquier entorno
+    ruta_csv = resource_path(ruta_csv)
+
     # Cargar el archivo CSV sin encabezados
     enso_df = pd.read_csv(ruta_csv, header=None)
     

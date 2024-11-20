@@ -8,10 +8,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from PIL import Image, ImageTk
 import os
 import seaborn as sns
-
+import sys
 import sv_ttk 
 
-from src.data_processing import cargar_datos, calcular_estadisticos,cargar_datos_enso
+from src.data_processing import *
 from src.visualization import *
 
 # Función para seleccionar archivo
@@ -552,25 +552,11 @@ alto_inicial = 500
 # Configura la ventana antes de centrarla
 root.update_idletasks()
 
-import sys
-import os
-
-def resource_path(relative_path):
-    """Obtiene la ruta absoluta del recurso, para PyInstaller y entorno local."""
-    try:
-        # PyInstaller usa _MEIPASS para la ruta de los archivos temporales
-        base_path = sys._MEIPASS
-    except AttributeError:
-        # En modo desarrollo, la ruta base es el directorio actual
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
-icono_path = resource_path("assets/icon.png")
+icon_path = resource_path("assets/icon.png")
 welcome_image_path = resource_path("assets/welcome.png")
 
 # Cargar la imagen del icono (debe ser de formato .png)
-icon_path = icono_path
+icon_path = icon_path
 icon_img = Image.open(icon_path)
 icon_photo = ImageTk.PhotoImage(icon_img)
 root.iconphoto(False, icon_photo)
