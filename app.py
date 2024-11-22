@@ -394,11 +394,12 @@ def crear_graficos_pestana3(datos):
     canvas3.draw()
     canvas3.get_tk_widget().grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
 
-
     def cambiar_distribucion(distribucion):
         # Limpiar únicamente el gráfico Q-Q en la posición [3,2] para evitar acumulaciones
-        for widget in frame_pestana3.grid_slaves(row=2, column=2):
-            widget.destroy()
+        for widget in frame_pestana3.grid_slaves():
+            info = widget.grid_info()
+            if (int(info["row"]), int(info["column"])) in [(1, 1), (1, 2), (2, 1)]:
+                widget.destroy()
 
         # Selección de la función de distribución y la función específica de visualización
         if distribucion == "gumbel":
@@ -523,6 +524,31 @@ def crear_graficos_pestana3(datos):
     # Gráficos iniciales (Gumbel por defecto)
     cambiar_distribucion('gumbel')
 
+    # [3,3] - Crear la curva de excedencias empírica una sola vez
+    def crear_curva_excedencias():
+        fig_curva, ax_curva = plt.subplots(figsize=(6, 4))
+
+        # Calcular la curva de excedencias
+        datos_ordenados = datos['Valor'].sort_values(ascending=False).reset_index(drop=True)
+        n = len(datos_ordenados)
+        prob_excedencia = [(i / (n + 1)) * 100 for i in range(1, n + 1)]
+
+        # Graficar la curva
+        ax_curva.plot(datos_ordenados, prob_excedencia, label="Curva de Excedencias", color="purple")
+        ax_curva.set_title("Curva de Excedencias Empírica")
+        ax_curva.set_xlabel("Q [m³/s]")
+        ax_curva.set_ylabel("Probabilidad de Excedencia (%)")
+        ax_curva.grid(True)
+        ax_curva.legend()
+
+        # Mostrar el gráfico fijo en la posición (3,3)
+        fig_curva.tight_layout()
+        canvas_curva = FigureCanvasTkAgg(fig_curva, master=frame_pestana3)
+        canvas_curva.draw()
+        canvas_curva.get_tk_widget().grid(row=2, column=2, sticky="nsew", padx=5, pady=5)
+        
+    # Llama a la función para crear el gráfico fijo
+    crear_curva_excedencias()
 #===============
 def centrar_ventana(ventana, ancho, alto):
     ventana.update_idletasks()
