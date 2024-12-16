@@ -2,7 +2,10 @@
 
 DataVista es una herramienta interactiva diseñada para la **visualización** y el **análisis** de datos hidrológicos. Este proyecto combina potentes librerías de procesamiento de datos y generación de gráficos en Python con una interfaz gráfica de usuario amigable basada en **Tkinter**. 🖥️ Está orientado a facilitar el análisis de series temporales, estadísticas descriptivas y patrones estacionales en caudales históricos.
 
-####  📄 En este repositorio se incluye un archivo PDF titulado **`instrucciones.pdf`**, donde se detalla el funcionamiento del aplicativo y las consideraciones necesarias para su correcto uso.  
+####  📄 En este repositorio se incluye un archivo PDF titulado **`instrucciones.pdf`**, donde se detalla el funcionamiento del aplicativo y las consideraciones necesarias para su correcto uso.
+
+### Nota: Los datos que se ingresan deben ser: `[Fecha, Valor]`
+
 
 ---
 
@@ -13,7 +16,7 @@ DataVista es una herramienta interactiva diseñada para la **visualización** y 
 - 📈 **Visualizaciones personalizadas**:
   - 📅 Gráficos de **series temporales**, histogramas, boxplots y gráficos de violín.
   - 🌡️ Análisis de patrones estacionales mediante mapas de calor y descomposición estacional.
-  - 🌊 **Curvas de duración de caudales** con cálculos de **excedencia** y niveles de retorno (**Gumbel, Weibull, Fréchet,Pearson, Gamma, Lognormal**).
+  - 🌊 **Curvas de duración de caudales** con cálculos de **excedencia** y niveles de retorno (**Gumbel, Weibull, Fréchet, Lognormal**).
 - 🌍 **Análisis ENSO**:
   - 🔄 Correlación de datos hidrológicos con fases ENSO (**El Niño, La Niña, Neutral**) y análisis de su impacto.
 - 🖱️ **Interfaz gráfica de usuario**:
